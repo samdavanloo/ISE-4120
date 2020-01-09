@@ -10,18 +10,19 @@
 ### getting and setting current working directory and view their contents
 import os # importing a module
 os.getcwd()
-os.chdir('/Users/Sam/Box/0-Sam/MyGitHub/ISE-3230')
+os.chdir('/Users/Sam/Box/0-Sam/MyGitHub/ISE-4120')
 os.getcwd()
 os.listdir(os.getcwd()) #see the contenets of the current directory
 
 #%%
 myint=7 # type is integer
 myfloat=7.0 # type is float
+del myfloat
 myfloat=7.
+del myfloat
 myfloat=float(7)
 print(myint+myfloat)
 myint/8
-myfloat/8
 import math   # import module
 math.sqrt(36)
 from math import sqrt   # from 'module' import 'objecte'
@@ -43,7 +44,7 @@ phrase='hello '+'world' # concatenate strings
 print(phrase)
 
 #%% clearing console, deleting variable
-clear() # clear console
+clear() # clear console (system command)
 
 y=1
 z=2
@@ -82,8 +83,8 @@ my_list[1]=20
 my_list3
 
 # some operators
-3 in my_list
-[1,2,3]+[4,5,6]
+3 in my_list 
+[1,2,3]+[4,5,6] #concatenate, not addition
 [1,2,3]*3
 
 # some methods
@@ -92,7 +93,7 @@ my_list.append(3)
 my_list
 my_list.insert(0,5) # where, what
 my_list
-my_list.extend([100,101])
+my_list.extend([100,101]) 
 my_list
 my_list.index(5) # returns index of the argument (index starts at 0)
 
@@ -123,9 +124,15 @@ my_tuple2
 my_set={1,1,1,2,3,3}
 my_set
 len(my_set)
-range(10) #result is a set
-range(3,8) #upto 7
-range(0,20,2)
+my_set1=range(10) #result is a set
+for i in my_set1:
+    print(i)
+my_set2=range(3,8) #from 3 upto 7
+for i in my_set2:
+    print(i)
+my_set3=range(0,20,2) #from 0 upto 18
+for i in my_set3:
+    print(i)
 3 in my_set  
 4 not in my_set    
 my_set1=my_set.copy() #independent copy
@@ -148,10 +155,10 @@ my_dict2=my_dict.copy()  #independent copy
 my_dict2
 
 'john' in my_dict
-my_dict.clear()
+my_dict.clear() #erasing the content
 my_dict
 
-#dictionar methods
+#dictionary methods
 my_dict={"foo":1,"bar":2}
 my_dict.keys()
 my_dict.values()
