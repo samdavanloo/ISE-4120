@@ -37,6 +37,7 @@ import os # importing a module
 os.getcwd()
 os.chdir('/Users/Sam/Box/0-Sam/MyGitHub/ISE-4120')
 os.getcwd()
+df.to_csv("data_new.csv")
 df.to_csv("data_new.csv",index=False)
 df.to_csv("data_new.csv",columns=['temperature','day'])
 df.to_csv("data_new.csv",header=False)
@@ -50,6 +51,7 @@ df.tail(2) # see botttom 2 rows
 df[2:5]
 df.columns
 df.day
+df.event
 df['event']
 type(df.event)
 df[['event','temperature']]
@@ -60,6 +62,7 @@ df.describe() #only acts on numerical columns
 df[df.temperature>=29]
 df[df.temperature==df['temperature'].max()]
 df['day'][df.temperature==df['temperature'].max()]
+df.day[df.temperature==df['temperature'].max()]
 
 df.index
 df.set_index('day')
@@ -78,6 +81,7 @@ df
 df.set_index('day',inplace=True)
 df
 new_df=df.fillna(0)
+new_df
 new_df=df.fillna({
         'temperature':0,
         'windspeed':0,
