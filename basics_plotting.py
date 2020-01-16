@@ -26,7 +26,7 @@ plt.plot(year,apl_price,':k',year,ms_price,'--r')
 plt.xlabel('Year')
 plt.ylabel('Stock Price')
 plt.axis([2013,2019,35,170])   #range on each axis
-plt.savefig('test_plot.pdf') 
+plt.savefig('Figures/test_plot.pdf') 
 
 fig_1=plt.figure(1,figsize=(9.6,2.8))
 chart_1=fig_1.add_subplot(121)
@@ -50,5 +50,5 @@ plt.figure()
 plt.plot(x,y,'r--',x,z,'b',linewidth=4.0)
 plt.legend(['$sin(4x)*e^{-x}$','$cos(4x)*e^{-x}$'])
 plt.xlabel('x')
-plt.savefig('fig_test.pdf')
+plt.savefig('Figures/fig_test.pdf')
 
