@@ -241,7 +241,7 @@ B = np.array([[7, 8], [9, 10]])
 print(B)
 
 print(np.add(A,B))
-print(np.dot(A,B)) # X*Y
+print(np.dot(A,B)) # A*B
 print(np.sum(B,axis=0)) #over rows
 print(np.sum(B,axis=1)) #over columns
 print(A.T) # matrix transpose
