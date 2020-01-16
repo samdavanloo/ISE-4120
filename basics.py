@@ -228,3 +228,33 @@ def adder(num1,num2):
 
 adder(3,4)
 
+#%%
+### Basic matrix algebra
+import numpy as np
+
+print(np.zeros([3,3]))
+print(np.ones([3,3]))
+
+A = np.array([[1, 2], [4, 5]])  # row by row
+print(A)
+B = np.array([[7, 8], [9, 10]])
+print(B)
+
+print(np.add(A,B))
+print(np.dot(A,B)) # X*Y
+print(np.sum(B,axis=0)) #over rows
+print(np.sum(B,axis=1)) #over columns
+print(A.T) # matrix transpose
+
+b=np.array([1,2])
+print(b)
+b = np.array([[1],[2]])
+print(b)
+np.dot(A,b)
+
+Ainv=np.linalg.inv(A)
+print(Ainv)
+x=np.dot(Ainv,b)
+print(x)
+print(np.dot(A,x))  # is equal to b
+print(np.linalg.solve(A,b)) # similar operation
