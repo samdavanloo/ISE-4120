@@ -34,7 +34,7 @@ z_0=(x_bar-mu_0)/(sigma/np.sqrt(n))
 print(z_0)
 
 # calculate the p_value
-p_value=norm.cdf(z_0,loc=0,scale=1)
+p_value=1-norm.cdf(z_0,loc=0,scale=1)
 print(p_value)
 
 
@@ -53,7 +53,7 @@ mu_0=100
 sigma=12
 n=5
 np.random.seed(8) 
-data = np.random.normal(loc=110, scale=sigma, size=n)
+data = np.random.normal(loc=90, scale=sigma, size=n)
 
 # calculate the z-statistic
 x_bar = data.mean()
@@ -61,7 +61,7 @@ z_0=(x_bar-mu_0)/(sigma/np.sqrt(n))
 print(z_0)
 
 # calculate the p_value
-p_value=1-norm.cdf(z_0,loc=0,scale=1)
+p_value=norm.cdf(z_0,loc=0,scale=1)
 print(p_value) 
 
 
