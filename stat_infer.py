@@ -20,7 +20,7 @@ from scipy.stats import norm
 
 # H_0: mu=mu_0
 # H_A: mu>mu_0  <---------
-mu_0=100
+mu_0=76
 
 # simulating the data
 sigma=12
@@ -40,14 +40,14 @@ print(p_value)
 
 ## upper confidence interval
 z_alpha = norm.isf(0.05, loc=0, scale=1) # let alpha=0.05
-UB=x_bar+z_alpha*sigma/np.sqrt(n)
-CI=[-float('inf'),UB]
+LB=x_bar-z_alpha*sigma/np.sqrt(n)
+CI=[LB,float('inf')] #Lower CI for H_A: mu>mu_0, reject if LB>mu_0
 print(CI)
 
 ####################
 # H_0: mu=mu_0
 # H_A: mu<mu_0  <---------
-mu_0=100
+mu_0=88
 
 # simulating the data
 sigma=12
@@ -67,8 +67,8 @@ print(p_value)
 
 ### lower confidence interval
 z_alpha = norm.isf(0.05, loc=0, scale=1) # let alpha=0.05
-LB=x_bar-z_alpha*sigma/np.sqrt(n)
-CI=[LB,float('inf')]
+UB=x_bar+z_alpha*sigma/np.sqrt(n)
+CI=[-float('inf'),UB] #Upper CI for H_A: mu<mu_0, reject if UB<mu_0
 print(CI)
 
 ####################
@@ -96,7 +96,7 @@ print(p_value)
 z_alpha_div_2 = norm.isf(0.025, loc=0, scale=1) # let alpha=0.05
 LB=x_bar-z_alpha_div_2*sigma/np.sqrt(n)
 UB=x_bar+z_alpha_div_2*sigma/np.sqrt(n)
-CI=[LB,UB]
+CI=[LB,UB] # reject if UB<mu_0, or LB>mu_0
 print(CI)
 
 
@@ -128,14 +128,14 @@ x_bar=data.mean()
 s=np.std(data)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
 print(t_alpha)
-UB=x_bar+t_alpha*s/np.sqrt(n)
-CI=[-float('inf'),UB]
+LB=x_bar-t_alpha*s/np.sqrt(n)
+CI=[LB,float('inf')]
 print(CI)
 
 ####################
 # H_0: mu=mu_0
 # H_A: mu<mu_0  <---------
-mu_0=100
+mu_0=109
 
 # simulating the data
 sigma=12
@@ -154,8 +154,8 @@ x_bar=data.mean()
 s=np.std(data)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
 print(t_alpha)
-LB=x_bar-t_alpha*s/np.sqrt(n)
-CI=[LB,float('inf')]
+UB=x_bar+t_alpha*s/np.sqrt(n)
+CI=[-float('inf'),UB]
 print(CI)
 
 ####################
@@ -191,7 +191,7 @@ import scipy as sc
 
 # H_0: sigma^2=sigma0^2
 # H_A: sigma^2>sigma0^2  <---------
-sigma0_p2=100
+sigma0_p2=120
 
 # simulating the data
 sigma=10
@@ -212,13 +212,13 @@ print(p_value)
 
 ## confidence interval
 s=np.std(data)
-chi2_1_minus_alpha = sc.stats.chi2.isf(0.95, df=n-1) # let alpha=0.05
-UB=(n-1)*pow(s,2)/chi2_1_minus_alpha
-CI=[-float('inf'),UB]
+chi2_alpha = sc.stats.chi2.isf(0.05, df=n-1) # let alpha=0.05
+LB=(n-1)*pow(s,2)/chi2_alpha
+CI=[LB,float('inf')]
 print(CI)
 
 
-#################### 4. Inference on the difference of   ##########
+#################### 4. Inference on the Proportions   ##########
 # required modules 
 import numpy as np
 import scipy as sc
@@ -259,8 +259,6 @@ import scipy as sc
 
 # H_0: mu_1-mu_2 = Delta
 # H_A: mu_1-mu_2 \neq Delta  <---------
-mu_1=110
-mu_2=101
 Delta=5
 
 # simulating the data
@@ -269,8 +267,8 @@ sigma_2=8
 n_1=10
 n_2=12
 np.random.seed(8) 
-data_1 = np.random.normal(loc=mu_1, scale=sigma_1, size=n_1)
-data_2 = np.random.normal(loc=mu_2, scale=sigma_2, size=n_2)
+data_1 = np.random.normal(loc=110, scale=sigma_1, size=n_1)
+data_2 = np.random.normal(loc=101, scale=sigma_2, size=n_2)
 
 
 # z-test
@@ -294,20 +292,20 @@ print(CI)
 import numpy as np
 import scipy as sc
 
+##### Case I : Variance Known
+
 # H_0: mu_1-mu_2 = Delta
 # H_A: mu_1-mu_2 \neq Delta  <---------
-mu_1=110
-mu_2=101
 Delta=5
 
 # simulating the data
-sigma_1=10
+sigma_1=8
 sigma_2=8
 n_1=10
 n_2=12
 np.random.seed(8) 
-data_1 = np.random.normal(loc=mu_1, scale=sigma_1, size=n_1)
-data_2 = np.random.normal(loc=mu_2, scale=sigma_2, size=n_2)
+data_1 = np.random.normal(loc=110, scale=sigma_1, size=n_1)
+data_2 = np.random.normal(loc=101, scale=sigma_2, size=n_2)
 
 # t-test
 x_bar_1=data_1.mean()
@@ -315,7 +313,7 @@ x_bar_2=data_2.mean()
 s2_1=np.var(data_1)
 s2_2=np.var(data_2)
 s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)
-t=((x_bar_1-x_bar_2)-(Delta))/np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2)
+t=(x_bar_1-x_bar_2-Delta)/(np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2))
 p_value=2*sc.stats.t.sf(abs(t),n_1+n_2-2)
 print(p_value)
 
@@ -326,6 +324,48 @@ UB=x_bar_1-x_bar_2+t_alpha_div_2*np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2)
 LB=x_bar_1-x_bar_2-t_alpha_div_2*np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2)
 CI=[LB,UB]
 print(CI)
+
+
+##### Case II : Variance Unknown
+
+# H_0: mu_1-mu_2 = Delta
+# H_A: mu_1-mu_2 \neq Delta  <---------
+Delta=5
+
+# simulating the data
+sigma_1=8
+sigma_2=10
+n_1=10
+n_2=12
+np.random.seed(8) 
+data_1 = np.random.normal(loc=110, scale=sigma_1, size=n_1)
+data_2 = np.random.normal(loc=101, scale=sigma_2, size=n_2)
+
+# t-test
+x_bar_1=data_1.mean()
+x_bar_2=data_2.mean()
+s2_1=np.var(data_1)
+s2_2=np.var(data_2)
+s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)
+t=(x_bar_1-x_bar_2-Delta)/np.sqrt(s2_1/n_1+s2_2/n_2)
+nu=pow(s2_1/n_1+s2_2/n_2,2)/(pow(s2_1/n_1,2)/(n_1-1)+pow(s2_2/n_2,2)/(n_2-1))-2
+print(nu)
+p_value=2*sc.stats.t.sf(abs(t),nu)
+print(p_value)
+
+
+## condidence interval
+t_alpha_div_2=sc.stats.t.isf(0.025,nu)
+UB=x_bar_1-x_bar_2+t_alpha_div_2*np.sqrt(s2_1/n_1+s2_2/n_2)
+LB=x_bar_1-x_bar_2-t_alpha_div_2*np.sqrt(s2_1/n_1+s2_2/n_2)
+CI=[LB,UB]
+print(CI)
+
+
+#################### 7. Inference on more than two populations (ANOVA)  ##########
+
+
+
 
 
 
