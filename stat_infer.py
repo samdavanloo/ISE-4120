@@ -12,7 +12,7 @@ Statistical Inference
 # If p_value is greater than alpha, then null cannot be rejected; otherwise, it will be rejected.
 
 
-#################### 1. Inference on the mean of Normal distribution (variance knwon)  ##########
+#################### 1. Inference on the mean of Normal distribution (variance known)  ##########
 # required modules 
 import numpy as np
 from scipy.stats import norm
@@ -123,9 +123,9 @@ print("t-stat is: "+str(tstat))
 print("p-value is: "+str(p_value))
 
 
-## upper confidence interval
+## upper confidenfce interval
 x_bar=data.mean()
-s=np.std(data)
+s=np.std(data,ddof=1)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
 print(t_alpha)
 LB=x_bar-t_alpha*s/np.sqrt(n)
@@ -151,7 +151,7 @@ print("p-value is: "+str(p_value))
 
 ## lower confidence interval
 x_bar=data.mean()
-s=np.std(data)
+s=np.std(data,ddof=1)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
 print(t_alpha)
 UB=x_bar+t_alpha*s/np.sqrt(n)
@@ -177,7 +177,7 @@ print("p-value is: "+str(p_value))
 
 ## confidence interval
 x_bar=data.mean()
-s=np.std(data)
+s=np.std(data,ddof=1)
 t_alpha_div_2 = sc.stats.t.isf(0.025, df=n-1) # let alpha=0.05
 LB=x_bar-t_alpha_div_2*s/np.sqrt(n)
 UB=x_bar+t_alpha_div_2*s/np.sqrt(n)
@@ -224,7 +224,7 @@ import numpy as np
 import scipy as sc
 
 # H_0: p=p_0
-# H_A: p<>p_0  <---------
+# H_A: p \neq p_0  <---------
 p_0=0.5
 
 x=46 # let x be the number of defects in n products
@@ -252,7 +252,7 @@ LB=p_hat-z_alpha_div_2*np.sqrt(p_hat*(1-p_hat)/n)
 CI=[LB,UB]
 print(CI)
         
-#################### 5. Inference on the difference of means, variance known  ##########
+#################### 5.1. Inference on the difference of means, variance known  ##########
 # required modules 
 import numpy as np
 import scipy as sc
@@ -287,7 +287,28 @@ CI=[LB,UB]
 print(CI)
 
 
-#################### 6. Inference on the difference of means, variance unknown  ##########
+###### diagnoostics
+
+#%matplotlib inline
+import matplotlib.pyplot as plt
+
+# checking for normality
+fig = plt.figure()
+ax1 = fig.add_subplot(121)
+data1_fg = sc.stats.probplot(data_1,dist='norm',plot=ax1)
+ax2 = fig.add_subplot(122)
+prob_plot = sc.stats.probplot(data_2,dist='norm',plot=ax2)
+plt.show()
+
+# checking constant variance
+data = [data_1, data_2]
+fig = plt.figure()
+ax = fig.add_subplot(111)
+bp_plot = ax.boxplot(data)
+plt.show()
+
+
+#################### 5.2. Inference on the difference of means, variance unknown  ##########
 # required modules 
 import numpy as np
 import scipy as sc
@@ -312,7 +333,7 @@ x_bar_1=data_1.mean()
 x_bar_2=data_2.mean()
 s2_1=np.var(data_1)
 s2_2=np.var(data_2)
-s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)
+s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)   # pooled variance estimator
 t=(x_bar_1-x_bar_2-Delta)/(np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2))
 p_value=2*sc.stats.t.sf(abs(t),n_1+n_2-2)
 print(p_value)
@@ -362,11 +383,28 @@ CI=[LB,UB]
 print(CI)
 
 
-#################### 7. Inference on more than two populations (ANOVA)  ##########
+#################### 6. Inference on more than two populations (ANOVA)  ##########
+import pandas as pd
 
+# generate data
+A = [12.6, 12, 11.8, 11.9, 13, 12.5, 14]
+B = [10, 10.2, 10, 12, 14, 13]
+C = [10.1, 13, 13.4, 12.9, 8.9, 10.7, 13.6, 12]
+all_scores = A + B + C
+print(all_scores)
+company_names = (['A'] * len(A)) +  (['B'] * len(B)) +  (['C'] * len(C))
+data = pd.DataFrame({'company': company_names, 'score': all_scores})
+data
 
+# descriptive statistics
+data.groupby('company').mean()
 
-
+# one-way ANOVA
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+lm = ols('score ~ company',data=data).fit()
+table = sm.stats.anova_lm(lm)
+print(table)
 
 
 
