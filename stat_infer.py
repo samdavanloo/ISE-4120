@@ -38,7 +38,7 @@ p_value=1-norm.cdf(z_0,loc=0,scale=1)
 print(p_value)
 
 
-## upper confidence interval
+## lower confidence interval
 z_alpha = norm.isf(0.05, loc=0, scale=1) # let alpha=0.05
 LB=x_bar-z_alpha*sigma/np.sqrt(n)
 CI=[LB,float('inf')] #Lower CI for H_A: mu>mu_0, reject if LB>mu_0
@@ -65,7 +65,7 @@ p_value=norm.cdf(z_0,loc=0,scale=1)
 print(p_value) 
 
 
-### lower confidence interval
+### upper confidence interval
 z_alpha = norm.isf(0.05, loc=0, scale=1) # let alpha=0.05
 UB=x_bar+z_alpha*sigma/np.sqrt(n)
 CI=[-float('inf'),UB] #Upper CI for H_A: mu<mu_0, reject if UB<mu_0
@@ -123,7 +123,7 @@ print("t-stat is: "+str(tstat))
 print("p-value is: "+str(p_value))
 
 
-## upper confidenfce interval
+## lower confidenfce interval
 x_bar=data.mean()
 s=np.std(data,ddof=1)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
@@ -149,7 +149,7 @@ print("t-stat is: "+str(tstat))
 print("p-value is: "+str(p_value))
 
 
-## lower confidence interval
+## upper confidence interval
 x_bar=data.mean()
 s=np.std(data,ddof=1)
 t_alpha = sc.stats.t.isf(0.05, df=n-1) # let alpha=0.05
@@ -200,14 +200,13 @@ np.random.seed(8)
 data=np.random.normal(loc=100,scale=10,size=n)
 
 
-s=np.std(data)
+s=np.std(data,ddof=1)
 chi0_p2=(n-1)*pow(s,2)/sigma0_p2
 print(chi0_p2)
 chi_p2_alpha = sc.stats.chi2.isf(0.05,n-1)
 print(chi_p2_alpha)
 p_value=1-sc.stats.chi2.cdf(chi0_p2,n-1)
 print(p_value)
-
 
 
 ## confidence interval
@@ -217,6 +216,16 @@ LB=(n-1)*pow(s,2)/chi2_alpha
 CI=[LB,float('inf')]
 print(CI)
 
+
+### calculating the p-value for two-sided chi-square test
+# H_0: sigma^2=sigma0^2
+# H_A: sigma^2 \neq sigma0^2  <---------
+
+s=np.std(data,ddof=1)
+chi0_p2=(n-1)*pow(s,2)/sigma0_p2
+print(chi0_p2)
+p_value=2*min(sc.stats.chi2.cdf(chi0_p2,n-1),sc.stats.chi2.sf(chi0_p2,n-1))
+print(p_value)
 
 #################### 4. Inference on the Proportions   ##########
 # required modules 
