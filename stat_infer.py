@@ -251,6 +251,8 @@ UB=p_hat+z_alpha_div_2*np.sqrt(p_hat*(1-p_hat)/n)
 LB=p_hat-z_alpha_div_2*np.sqrt(p_hat*(1-p_hat)/n)
 CI=[LB,UB]
 print(CI)
+
+#################### 5. Inference on the difference of means  ##########
         
 #################### 5.1. Inference on the difference of means, variance known  ##########
 # required modules 
@@ -300,12 +302,6 @@ ax2 = fig.add_subplot(122)
 prob_plot = sc.stats.probplot(data_2,dist='norm',plot=ax2)
 plt.show()
 
-# checking constant variance
-data = [data_1, data_2]
-fig = plt.figure()
-ax = fig.add_subplot(111)
-bp_plot = ax.boxplot(data)
-plt.show()
 
 
 #################### 5.2. Inference on the difference of means, variance unknown  ##########
@@ -313,7 +309,7 @@ plt.show()
 import numpy as np
 import scipy as sc
 
-##### Case I : Variance Known
+##### Case I : Variance unKnown, but equal
 
 # H_0: mu_1-mu_2 = Delta
 # H_A: mu_1-mu_2 \neq Delta  <---------
@@ -346,8 +342,15 @@ LB=x_bar_1-x_bar_2-t_alpha_div_2*np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2)
 CI=[LB,UB]
 print(CI)
 
+# checking constant variance
+data = [data_1, data_2]
+fig = plt.figure()
+ax = fig.add_subplot(111)
+bp_plot = ax.boxplot(data)
+plt.show()
 
-##### Case II : Variance Unknown
+
+##### Case II : Variance Unknown, and unequal
 
 # H_0: mu_1-mu_2 = Delta
 # H_A: mu_1-mu_2 \neq Delta  <---------
@@ -367,7 +370,6 @@ x_bar_1=data_1.mean()
 x_bar_2=data_2.mean()
 s2_1=np.var(data_1)
 s2_2=np.var(data_2)
-s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)
 t=(x_bar_1-x_bar_2-Delta)/np.sqrt(s2_1/n_1+s2_2/n_2)
 nu=pow(s2_1/n_1+s2_2/n_2,2)/(pow(s2_1/n_1,2)/(n_1-1)+pow(s2_2/n_2,2)/(n_2-1))-2
 print(nu)
