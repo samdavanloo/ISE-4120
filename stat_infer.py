@@ -336,9 +336,9 @@ data_2 = np.random.normal(loc=101, scale=sigma_2, size=n_2)
 # t-test
 x_bar_1=data_1.mean()
 x_bar_2=data_2.mean()
-s2_1=np.var(data_1)
-s2_2=np.var(data_2)
-s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n+2-2)   # pooled variance estimator
+s2_1=np.var(data_1,ddof=1)
+s2_2=np.var(data_2,ddof=1)
+s2_p=((n_1-1)*s2_1+(n_2-1)*s2_2)/(n_1+n_2-2)   # pooled variance estimator
 t=(x_bar_1-x_bar_2-Delta)/(np.sqrt(s2_p)*np.sqrt(1/n_1+1/n_2))
 p_value=2*sc.stats.t.sf(abs(t),n_1+n_2-2)
 print(p_value)
@@ -377,8 +377,8 @@ data_2 = np.random.normal(loc=101, scale=sigma_2, size=n_2)
 # t-test
 x_bar_1=data_1.mean()
 x_bar_2=data_2.mean()
-s2_1=np.var(data_1)
-s2_2=np.var(data_2)
+s2_1=np.var(data_1,ddof=1)
+s2_2=np.var(data_2,ddof=1)
 t=(x_bar_1-x_bar_2-Delta)/np.sqrt(s2_1/n_1+s2_2/n_2)
 nu=pow(s2_1/n_1+s2_2/n_2,2)/(pow(s2_1/n_1,2)/(n_1-1)+pow(s2_2/n_2,2)/(n_2-1))-2
 print(nu)

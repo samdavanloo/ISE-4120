@@ -29,7 +29,9 @@ df
 df = pd.DataFrame(my_dict)
 
 #%%
-df = pd.read_csv("/Users/Sam/Box/0-Sam/MyGitHub/ISE-4120/data_1.csv",nrows=2)
+df = pd.read_csv('/Users/Sam/Box/0-Sam/MyGitHub/ISE-4120'
+                 '/DataFiles/data_1.csv',
+                 nrows=2)
 df
 df = pd.read_csv("/Users/Sam/Box/0-Sam/MyGitHub/ISE-4120/data_1.csv",na_values=["n.a."])
 df
