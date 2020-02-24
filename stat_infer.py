@@ -118,9 +118,15 @@ np.random.seed(8)
 data=np.random.normal(loc=102,scale=10,size=n)
 
 # t-test
-tstat,p_value=weightstats.ztest(data,value=mu_0,alternative='larger')
+tstat,p_value=weightstats.ztest(data,value=mu_0,alternative='larger') # p-value is WRONG
 print("t-stat is: "+str(tstat))
 print("p-value is: "+str(p_value))
+
+# manual calculation
+tstat2=(data.mean()-mu_0)/(np.std(data,ddof=1)/np.sqrt(n))
+print(tstat2)
+p_value2=sc.stats.t.sf(tstat2,df=n-1)
+print(p_value2)
 
 
 ## lower confidenfce interval
