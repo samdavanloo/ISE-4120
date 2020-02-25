@@ -402,6 +402,7 @@ print(CI)
 
 #################### 6. Inference on more than two populations (ANOVA)  ##########
 import pandas as pd
+import scypy as sc
 
 # generate data
 A = [12.6, 12, 11.8, 11.9, 13, 12.5, 14]
@@ -423,6 +424,11 @@ lm = ols('score ~ company',data=data).fit()
 table = sm.stats.anova_lm(lm)
 print(table)
 
+# calculating F_alpha
+df_num=3-1 #=a-1  where 'a' is the number of treatments
+df_denom=21-3 # N-a where 'N' is the total number of observations
+F_n1_n2_alpha=sc.stats.f.isf(0.05,df_num,df_denom)
+print(F_n1_n2_alpha)
 
 
 
