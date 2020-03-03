@@ -274,6 +274,7 @@ print(CI)
 import numpy as np
 import scipy as sc
 
+
 # H_0: mu_1-mu_2 = Delta
 # H_A: mu_1-mu_2 \neq Delta  <---------
 Delta=5
