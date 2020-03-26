@@ -104,13 +104,13 @@ n=50   # sample size
 D=np.random.randint(19,size=m) # number of nonconformings
 print(D)
 
-p_bar=np.sum(D)/(m*n)
+p_bar=np.sum(D)/(m*n)  # Eq. (7.7)
 print(p_bar)
 
 p=D/n
-CL=p_bar
-UCL=p_bar+3*np.sqrt(p_bar*(1-p_bar)/n)
-LCL=p_bar-3*np.sqrt(p_bar*(1-p_bar)/n)
+CL=p_bar     # Eq. (7.8)
+UCL=p_bar+3*np.sqrt(p_bar*(1-p_bar)/n)    # Eq. (7.8)
+LCL=p_bar-3*np.sqrt(p_bar*(1-p_bar)/n)    # Eq. (7.8)
 
 
 itr=list(range(m))
@@ -136,6 +136,8 @@ print(D)
 p_bar=np.sum(D)/(m*n)
 print(p_bar)
 
+
+# Calculation below is based on (7.13)
 CL=n*p_bar
 UCL=n*p_bar+3*np.sqrt(n*p_bar*(1-p_bar))
 LCL=n*p_bar-3*np.sqrt(n*p_bar*(1-p_bar))
@@ -162,6 +164,8 @@ print(num_defects)
 c_bar=np.sum(num_defects)/m
 print(c_bar)
 
+
+# Eq. (7.17)
 CL=c_bar
 UCL=c_bar+3*np.sqrt(c_bar)
 LCL=c_bar-3*np.sqrt(c_bar)
@@ -192,6 +196,7 @@ print(u)
 u_bar=np.sum(total_num_defects)/(m*n)
 print(u_bar)
 
+# Eq. (7.19)
 CL=u_bar
 UCL=u_bar+3*np.sqrt(u_bar/n)
 LCL=u_bar-3*np.sqrt(u_bar/n)
