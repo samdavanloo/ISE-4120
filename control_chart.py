@@ -208,3 +208,71 @@ plt.plot(itr,u,'ob-',itr,CL*np.ones(m),'k-',itr,LCL*np.ones(m),'r-',itr,UCL*np.o
 plt.xlabel('Sample')
 plt.title('u Control Chart')
 plt.legend(['average N0. of defects','CL','LCL','UCL'])
+
+
+#################### CUSUM & EWMA Control Charts  ####################
+
+#################### CUSUM control chart ##########
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(9) 
+m1=20
+m2=10
+m=m1+m2
+mu0=10
+data1=np.random.normal(loc=mu0,scale=1,size=m1)
+data2=np.random.normal(loc=mu0+1,scale=1,size=m2)
+data=np.concatenate((data1,data2),axis=0)
+print(data)
+
+c_pls,c_neg=np.zeros(m+1),np.zeros(m+1)
+K=1/2    
+for i in range(1,m):
+    c_pls[i]=np.maximum(0,data[i]-(mu0+K)+c_pls[i-1])
+    c_neg[i]=np.maximum(0,(mu0-K)-data[i]+c_neg[i-1])
+
+H=5
+itr=list(range(m))
+plt.figure()
+plt.plot(itr,c_pls[range(m)],'ob-',itr,c_neg[range(m)],'ok-',itr,H*np.ones(m),'r-')
+plt.xlabel('Observation')
+plt.title('CUSUM Control Chart')
+plt.legend(['C_pls','C_neg','H'])
+
+
+#################### EWMA control chart ##########
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(9) 
+m1=20
+m2=10
+m=m1+m2
+mu0=10
+sigma=1
+data1=np.random.normal(loc=mu0,scale=sigma,size=m1)
+data2=np.random.normal(loc=mu0+1,scale=sigma,size=m2)
+data=np.concatenate((data1,data2),axis=0)
+print(data)
+
+
+z=np.zeros(m+1)
+z[m]=mu0   
+lam=0.1
+L=2.7
+lcl=np.zeros(m)
+ucl=np.zeros(m)
+for i in range(0,m):
+    z[i]=lam*data[i]+(1-lam)*z[i-1]
+    lcl[i]=mu0-L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))
+    ucl[i]=mu0+L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))
+
+itr=list(range(m))
+plt.figure()
+plt.plot(itr,z[range(m)],'ob-',itr,mu0*np.ones(m),'k-',itr,lcl,'r-',itr,ucl,'r-')
+plt.xlabel('Observation')
+plt.title('EWMA Control Chart')
+plt.legend(['EWMA','mu0','LCL','UCL'])   
+    
+
