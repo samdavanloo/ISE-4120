@@ -229,8 +229,8 @@ print(data)
 c_pls,c_neg=np.zeros(m+1),np.zeros(m+1)
 K=1/2    
 for i in range(1,m):
-    c_pls[i]=np.maximum(0,data[i]-(mu0+K)+c_pls[i-1])
-    c_neg[i]=np.maximum(0,(mu0-K)-data[i]+c_neg[i-1])
+    c_pls[i]=np.maximum(0,data[i]-(mu0+K)+c_pls[i-1]) #Eq. (9.2)
+    c_neg[i]=np.maximum(0,(mu0-K)-data[i]+c_neg[i-1]) #Eq. (9.3)
 
 H=5
 itr=list(range(m))
@@ -264,9 +264,9 @@ L=2.7
 lcl=np.zeros(m)
 ucl=np.zeros(m)
 for i in range(0,m):
-    z[i]=lam*data[i]+(1-lam)*z[i-1]
-    lcl[i]=mu0-L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))
-    ucl[i]=mu0+L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))
+    z[i]=lam*data[i]+(1-lam)*z[i-1]  #Eq. (9.22)
+    lcl[i]=mu0-L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))   #Eq. (9.25)
+    ucl[i]=mu0+L*sigma*np.sqrt((lam/(2-lam))*(1-np.power((1-lam),(2*(i+1)))))#Eq. (9.26)
 
 itr=list(range(m))
 plt.figure()
