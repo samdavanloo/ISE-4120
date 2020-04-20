@@ -226,16 +226,16 @@ data2=np.random.normal(loc=mu0+1,scale=1,size=m2)
 data=np.concatenate((data1,data2),axis=0)
 print(data)
 
-c_pls,c_neg=np.zeros(m+1),np.zeros(m+1)
+c_pls,c_neg=np.zeros(m),np.zeros(m)
 K=1/2    
-for i in range(1,m):
-    c_pls[i]=np.maximum(0,data[i]-(mu0+K)+c_pls[i-1]) #Eq. (9.2)
+for i in range(0,m):
+    c_pls[i]=np.maximum(0,data[i]-(mu0+K)+c_pls[i-1]) #Eq. (9.2) when i =0, c_pls[-1] is the last element of c_pls, which is zero.
     c_neg[i]=np.maximum(0,(mu0-K)-data[i]+c_neg[i-1]) #Eq. (9.3)
 
 H=5
 itr=list(range(m))
 plt.figure()
-plt.plot(itr,c_pls[range(m)],'ob-',itr,c_neg[range(m)],'ok-',itr,H*np.ones(m),'r-')
+plt.plot(itr,c_pls[range(m)],'ob-',itr,-c_neg[range(m)],'ok-',itr,H*np.ones(m),'r-',-H*np.ones(m),'r-')
 plt.xlabel('Observation')
 plt.title('CUSUM Control Chart')
 plt.legend(['C_pls','C_neg','H'])
